@@ -19,8 +19,7 @@ A new flutter plugin project.
   s.dependency 'GCDWebServer'
   s.dependency 'HLSCachingReverseProxyServer'
   s.dependency 'PINCache'
-#  s.dependency 'PallyConFPSSDK'
-  s.dependency 'DOVERUNNERFairPlay', :podspec => '../../pallycon-drm-sdk-flutter/2.5.0/lib/DOVERUNNERFairPlay.podspec'
+  s.dependency 'PallyConFPSSDK'
   
   s.platform = :ios, '14.0'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
