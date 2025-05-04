@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 class VariantInfo {
@@ -29,18 +30,26 @@ class VariantInfo {
   final String? captionGroupId;
 
   @override
-  bool operator ==(dynamic other) {
-    if (other is VariantInfo) {
-      return other.bitrate == bitrate &&
-          other.videoGroupId == videoGroupId &&
-          other.audioGroupId == audioGroupId &&
-          other.subtitleGroupId == subtitleGroupId &&
-          other.captionGroupId == captionGroupId;
-    }
-    return false;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is VariantInfo &&
+        other.runtimeType == runtimeType &&
+        other.bitrate == bitrate &&
+        other.videoGroupId == videoGroupId &&
+        other.audioGroupId == audioGroupId &&
+        other.subtitleGroupId == subtitleGroupId &&
+        other.captionGroupId == captionGroupId;
   }
 
   @override
-  int get hashCode => hashValues(
-      bitrate, videoGroupId, audioGroupId, subtitleGroupId, captionGroupId);
+  int get hashCode {
+    return Object.hash(
+      bitrate,
+      videoGroupId,
+      audioGroupId,
+      subtitleGroupId,
+      captionGroupId,
+    );
+  }
 }

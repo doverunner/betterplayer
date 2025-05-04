@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -36,23 +37,26 @@ class SchemeData {
       );
 
   @override
-  bool operator ==(dynamic other) {
-    if (other is SchemeData) {
-      return other.mimeType == mimeType &&
-          other.licenseServerUrl == licenseServerUrl &&
-//          other.uuid == uuid &&
-          other.requiresSecureDecryption == requiresSecureDecryption &&
-          other.data == data;
-    }
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-    return false;
+    return other is SchemeData &&
+        other.runtimeType == runtimeType &&
+        other.licenseServerUrl == licenseServerUrl &&
+        other.mimeType == mimeType &&
+        other.requiresSecureDecryption == requiresSecureDecryption &&
+        const ListEquality<int>().equals(data, other.data);
   }
 
   @override
-  int get hashCode => hashValues(
-      /*uuid, */
+  int get hashCode {
+    final dataHash = const ListEquality<int>().hash(data);
+
+    return Object.hash(
       licenseServerUrl,
       mimeType,
-      data,
-      requiresSecureDecryption);
+      dataHash,
+      requiresSecureDecryption,
+    );
+  }
 }

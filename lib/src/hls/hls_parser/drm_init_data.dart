@@ -10,14 +10,18 @@ class DrmInitData {
   final String? schemeType;
 
   @override
-  bool operator ==(dynamic other) {
-    if (other is DrmInitData) {
-      return schemeType == other.schemeType &&
-          const ListEquality<SchemeData>().equals(other.schemeData, schemeData);
-    }
-    return false;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is DrmInitData &&
+        other.runtimeType == runtimeType &&
+        other.schemeType == schemeType &&
+        const ListEquality<SchemeData>().equals(schemeData, other.schemeData);
   }
 
   @override
-  int get hashCode => hashValues(schemeType, schemeData);
+  int get hashCode {
+    final schemeDataHash = const ListEquality<SchemeData>().hash(schemeData);
+    return Object.hash(schemeType, schemeDataHash);
+  }
 }
