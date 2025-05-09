@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Cache', '~> 6.0.0'
+  s.dependency 'Cache'
   s.dependency 'GCDWebServer'
   s.dependency 'HLSCachingReverseProxyServer'
   s.dependency 'PINCache'

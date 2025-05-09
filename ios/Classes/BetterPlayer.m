@@ -33,7 +33,7 @@ AVPictureInPictureController *_pipController;
         _player.automaticallyWaitsToMinimizeStalling = false;
     }
     self._observersAdded = false;
-    _pallycon = [[PallyConFPSSDK alloc] init];
+    _doverunnerSdk = [[DOVERUNNERFairPlay alloc] init];
     return self;
 }
 
@@ -247,13 +247,13 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
         }
 
         NSString* content_id = @"";
-        NSString* pallycon_token = @"";
+        NSString* auth_data = @"";
         for (id key in drmHeaders) {
             NSLog(@"key: %@, value: %@ \n", key, [drmHeaders objectForKey:key]);
             if ([key isEqualToString:@"pallycon-customdata-v2"]) {
-                pallycon_token = [NSString stringWithString:drmHeaders[key]];
+                auth_data = [NSString stringWithString:drmHeaders[key]];
 
-                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:pallycon_token options:0];
+                NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:auth_data options:0];
                 NSError *error = nil;
                 NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:decodedData options:0 error:&error];
                 if (!error) {
@@ -279,8 +279,9 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
                                                     options:@{@"AVURLAssetHTTPHeaderFieldsKey" : headers}];
 
             if (certificateUrl && certificateUrl != [NSNull null] && [certificateUrl length] > 0) {
-                PallyConDrmConfiguration* config = [[PallyConDrmConfiguration alloc] initWithAvURLAsset:asset contentId:content_id certificateUrl:certificateUrl authData:pallycon_token delegate:self licenseUrl:licenseUrl keyIdList:nil licenseHttpHeader:nil licenseCookies:nil allowsKeyRotation:false renewalInterval:0];
-                [_pallycon prepareWithContent:config];
+                FairPlayConfiguration* config = [[FairPlayConfiguration alloc] initWithAvURLAsset:asset contentId:content_id certificateUrl:certificateUrl authData:auth_data delegate:self licenseUrl:licenseUrl keyIdList:nil licenseHttpHeader:nil licenseCookies:nil allowsKeyRotation:false renewalInterval:0];
+                
+                [_doverunnerSdk prepareWithContent:config];
             }
             item = [AVPlayerItem playerItemWithAsset:asset];
         }
