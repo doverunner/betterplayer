@@ -259,7 +259,7 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
                 if (!error) {
                     content_id = jsonDict[@"cid"]; // JSON에서 cid 값을 content_id에 할당
                 } else {
-                    NSLog(@"JSON 파싱 오류: %@", error.localizedDescription);
+                    NSLog(@"JSON Parsing Error: %@", error.localizedDescription);
                 }
             }
         }
@@ -279,9 +279,9 @@ static inline CGFloat radiansToDegrees(CGFloat radians) {
                                                     options:@{@"AVURLAssetHTTPHeaderFieldsKey" : headers}];
 
             if (certificateUrl && certificateUrl != [NSNull null] && [certificateUrl length] > 0) {
-                FairPlayConfiguration* config = [[FairPlayConfiguration alloc] initWithAvURLAsset:asset contentId:content_id certificateUrl:certificateUrl authData:auth_data delegate:self licenseUrl:licenseUrl keyIdList:nil licenseHttpHeader:nil licenseCookies:nil allowsKeyRotation:false renewalInterval:0];
+                FairPlayConfiguration* config = [[FairPlayConfiguration alloc] initWithAvURLAsset:asset contentId:content_id certificateUrl:certificateUrl authData:auth_data delegate:self licenseUrl:nil licenseHttpHeader:nil licenseCookies:nil renewalInterval:RenewalIntervalZero];
                 
-                [_doverunnerSdk prepareWithContent:config];
+                [_doverunnerSdk prepareWithDrm:config];
             }
             item = [AVPlayerItem playerItemWithAsset:asset];
         }
